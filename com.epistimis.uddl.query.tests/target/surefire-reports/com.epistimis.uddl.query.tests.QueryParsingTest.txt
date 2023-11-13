@@ -1,0 +1,12 @@
+-------------------------------------------------------------------------------
+Test set: com.epistimis.uddl.query.tests.QueryParsingTest
+-------------------------------------------------------------------------------
+Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.116 s - in null
+com.epistimis.uddl.query.tests.QueryParsingTest.testRIG_EquivalentEntity_Query1  Time elapsed: 0.272 s
+com.epistimis.uddl.query.tests.QueryParsingTest.testRIG_EquivalentEntity_Query2  Time elapsed: 0.006 s
+com.epistimis.uddl.query.tests.QueryParsingTest.testBasicSelect  Time elapsed: 0.006 s
+com.epistimis.uddl.query.tests.QueryParsingTest.testRIG_DogOwnership_CDM_Query1  Time elapsed: 0.004 s
+com.epistimis.uddl.query.tests.QueryParsingTest.testRIG_DogOwnership_CDM_Query2  Time elapsed: 0.012 s
+com.epistimis.uddl.query.tests.QueryParsingTest.testRIG_DogOwnership_CDM_Query3  Time elapsed: 0.008 s
+com.epistimis.uddl.query.tests.QueryParsingTest.testRIG_AircraftAirportArrival_PDM_Query1  Time elapsed: 0.007 s
+com.epistimis.uddl.query.tests.QueryParsingTest.testRIG_ModeledDomainConcepts_PDM_Query1  Time elapsed: 0.007 s

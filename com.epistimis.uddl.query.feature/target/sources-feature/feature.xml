@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature id="com.epistimis.uddl.query.feature.source" version="1.0.0.202311070530" label="Query Feature  Developer Resources" provider-name="Epistimis LLC">
+  <includes id="com.epistimis.uddl.query.feature" version="1.0.0.202311070530"/>
+  <plugin id="com.epistimis.uddl.query.source" version="1.0.0.202311070530" download-size="0" install-size="0" unpack="false"/>
+  <plugin id="com.epistimis.uddl.query.ide.source" version="1.0.0.202311070530" download-size="0" install-size="0" unpack="false"/>
+  <plugin id="com.epistimis.uddl.query.ui.source" version="1.0.0.202311070530" download-size="0" install-size="0" unpack="false"/>
+</feature>
