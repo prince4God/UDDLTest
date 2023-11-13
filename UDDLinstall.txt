@@ -1,0 +1,79 @@
+[[1;34mINFO[m] Scanning for projects...
+[[1;33mWARNING[m] Using JavaSE-21 to fulfill requested profile of JavaSE-17 this might lead to faulty dependency resolution, consider define a suitable JDK in the toolchains.xml
+[[1;34mINFO[m] ### Using TychoRepositoryTransport for remote P2 access ###
+[[1;34mINFO[m]     Cache location:         /home/prince/.m2/repository/.cache/tycho
+[[1;34mINFO[m]     Transport mode:         online
+[[1;34mINFO[m]     Update mode:            cache first
+[[1;34mINFO[m]     Minimum cache duration: 60 minutes
+[[1;34mINFO[m]       (you can configure this with -Dtycho.p2.transport.min-cache-minutes=<desired minimum cache duration>)
+[[1;33mWARNING[m] Using JavaSE-21 to fulfill requested profile of JavaSE-17 this might lead to faulty dependency resolution, consider define a suitable JDK in the toolchains.xml
+[[1;33mWARNING[m] Using JavaSE-21 to fulfill requested profile of JavaSE-17 this might lead to faulty dependency resolution, consider define a suitable JDK in the toolchains.xml
+[[1;33mWARNING[m] Using JavaSE-21 to fulfill requested profile of JavaSE-17 this might lead to faulty dependency resolution, consider define a suitable JDK in the toolchains.xml
+[[1;34mINFO[m] Resolving target definition file:/home/prince/eclipse-workspace/UDDL/com.epistimis.uddl.target/com.epistimis.uddl.target.target for environments=[macosx/cocoa/x86_64, win32/win32/x86_64, linux/gtk/x86_64], include source mode=honor, execution environment=StandardEEResolutionHints [executionEnvironment=OSGi profile 'JavaSE-21' { source level: 21, target level: 21}], remote p2 repository options=org.eclipse.tycho.p2.remote.RemoteAgent@c3836b6...
+[[1;34mINFO[m] Resolving dependencies of MavenProject: com.epistimis.uddl:com.epistimis.uddl:1.0.0-SNAPSHOT @ /home/prince/eclipse-workspace/UDDL/com.epistimis.uddl/pom.xml
+[[1;33mWARNING[m] The following locally built units have been used to resolve project dependencies:
+[[1;33mWARNING[m]   com.epistimis.uddl.query/1.0.0.202311070530
+[[1;34mINFO[m] Resolving dependencies of MavenProject: com.epistimis.uddl:com.epistimis.uddl.ide:1.0.0-SNAPSHOT @ /home/prince/eclipse-workspace/UDDL/com.epistimis.uddl.ide/pom.xml
+[[1;33mWARNING[m] The following locally built units have been used to resolve project dependencies:
+[[1;33mWARNING[m]   com.epistimis.uddl.query/1.0.0.202311070530
+[[1;33mWARNING[m]   com.epistimis.uddl.query.ide/1.0.0.202311070530
+[[1;34mINFO[m] Resolving dependencies of MavenProject: com.epistimis.uddl:com.epistimis.uddl.ui:1.0.0-SNAPSHOT @ /home/prince/eclipse-workspace/UDDL/com.epistimis.uddl.ui/pom.xml
+[[1;33mWARNING[m] The following locally built units have been used to resolve project dependencies:
+[[1;33mWARNING[m]   com.epistimis.uddl.query/1.0.0.202311070530
+[[1;33mWARNING[m]   com.epistimis.uddl.query.ide/1.0.0.202311070530
+[[1;34mINFO[m] Resolving dependencies of MavenProject: com.epistimis.uddl:com.epistimis.uddl.feature:1.0.0-SNAPSHOT @ /home/prince/eclipse-workspace/UDDL/com.epistimis.uddl.feature/pom.xml
+[[1;33mWARNING[m] The following locally built units have been used to resolve project dependencies:
+[[1;33mWARNING[m]   com.epistimis.uddl.query/1.0.0.202311070530
+[[1;33mWARNING[m]   com.epistimis.uddl.query.ui/1.0.0.202311070530
+[[1;33mWARNING[m]   com.epistimis.uddl.query.feature.feature.group/1.0.0.202311070530
+[[1;33mWARNING[m]   com.epistimis.uddl.query.ide/1.0.0.202311070530
+[[1;33mWARNING[m]   com.epistimis.uddl.query.feature.feature.jar/1.0.0.202311070530
+[[1;34mINFO[m] Resolving dependencies of MavenProject: com.epistimis.uddl:com.epistimis.uddl.repository:1.0.0-SNAPSHOT @ /home/prince/eclipse-workspace/UDDL/com.epistimis.uddl.repository/pom.xml
+[[1;33mWARNING[m] The following locally built units have been used to resolve project dependencies:
+[[1;33mWARNING[m]   com.epistimis.uddl.query/1.0.0.202311070530
+[[1;33mWARNING[m]   com.epistimis.uddl.query.ui/1.0.0.202311070530
+[[1;33mWARNING[m]   com.epistimis.uddl.query.feature.feature.group/1.0.0.202311070530
+[[1;33mWARNING[m]   com.epistimis.uddl.query.ide/1.0.0.202311070530
+[[1;33mWARNING[m]   com.epistimis.uddl.query.feature.feature.jar/1.0.0.202311070530
+[[1;34mINFO[m] Resolving dependencies of MavenProject: com.epistimis.uddl:com.epistimis.uddl.tests:1.0.0-SNAPSHOT @ /home/prince/eclipse-workspace/UDDL/com.epistimis.uddl.tests/pom.xml
+[[1;33mWARNING[m] The following locally built units have been used to resolve project dependencies:
+[[1;33mWARNING[m]   com.epistimis.uddl.query/1.0.0.202311070530
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1mReactor Build Order:[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] com.epistimis.uddl.parent                                          [pom]
+[[1;34mINFO[m] com.epistimis.uddl                                      [eclipse-plugin]
+[[1;34mINFO[m] com.epistimis.uddl.ide                                  [eclipse-plugin]
+[[1;34mINFO[m] com.epistimis.uddl.ui                                   [eclipse-plugin]
+[[1;34mINFO[m] com.epistimis.uddl.target                    [eclipse-target-definition]
+[[1;34mINFO[m] com.epistimis.uddl.feature                             [eclipse-feature]
+[[1;34mINFO[m] com.epistimis.uddl.repository                       [eclipse-repository]
+[[1;34mINFO[m] com.epistimis.uddl.tests                           [eclipse-test-plugin]
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m------------< [0;36mcom.epistimis.uddl:com.epistimis.uddl.parent[0;1m >------------[m
+[[1;34mINFO[m] [1mBuilding com.epistimis.uddl.parent 1.0.0-SNAPSHOT                  [1/8][m
+[[1;34mINFO[m] [1m--------------------------------[ pom ]---------------------------------[m
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1mReactor Summary for com.epistimis.uddl.parent 1.0.0-SNAPSHOT:[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] com.epistimis.uddl.parent .......................... [1;31mFAILURE[m [  0.017 s]
+[[1;34mINFO[m] com.epistimis.uddl ................................. [1;33mSKIPPED[m
+[[1;34mINFO[m] com.epistimis.uddl.ide ............................. [1;33mSKIPPED[m
+[[1;34mINFO[m] com.epistimis.uddl.ui .............................. [1;33mSKIPPED[m
+[[1;34mINFO[m] com.epistimis.uddl.target .......................... [1;33mSKIPPED[m
+[[1;34mINFO[m] com.epistimis.uddl.feature ......................... [1;33mSKIPPED[m
+[[1;34mINFO[m] com.epistimis.uddl.repository ...................... [1;33mSKIPPED[m
+[[1;34mINFO[m] com.epistimis.uddl.tests ........................... [1;33mSKIPPED[m
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1;31mBUILD FAILURE[m
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] Total time:  03:12 min
+[[1;34mINFO[m] Finished at: 2023-11-07T07:14:03+01:00
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;31mERROR[m] Unknown lifecycle phase "-". You must specify a valid lifecycle phase or a goal in the format <plugin-prefix>:<goal> or <plugin-group-id>:<plugin-artifact-id>[:<plugin-version>]:<goal>. Available lifecycle phases are: validate, initialize, generate-sources, process-sources, generate-resources, process-resources, compile, process-classes, generate-test-sources, process-test-sources, generate-test-resources, process-test-resources, test-compile, process-test-classes, test, prepare-package, package, pre-integration-test, integration-test, post-integration-test, verify, install, deploy, pre-clean, clean, post-clean, pre-site, site, post-site, site-deploy. -> [1m[Help 1][m
+[[1;31mERROR[m] 
+[[1;31mERROR[m] To see the full stack trace of the errors, re-run Maven with the [1m-e[m switch.
+[[1;31mERROR[m] Re-run Maven using the [1m-X[m switch to enable full debug logging.
+[[1;31mERROR[m] 
+[[1;31mERROR[m] For more information about the errors and possible solutions, please read the following articles:
+[[1;31mERROR[m] [1m[Help 1][m http://cwiki.apache.org/confluence/display/MAVEN/LifecyclePhaseNotFoundException

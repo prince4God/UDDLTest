@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="uddl" nsURI="http://www.epistimis.com/uddl/Uddl" nsPrefix="uddl">
+  <eClassifiers xsi:type="ecore:EClass" name="DataModel" eSuperTypes="#//UddlElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="cdm" upperBound="-1" eType="#//ConceptualDataModel"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ldm" upperBound="-1" eType="#//LogicalDataModel"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="pdm" upperBound="-1" eType="#//PlatformDataModel"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Include">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="importedNamespace" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="UddlElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ConceptualDataModel" eSuperTypes="#//UddlElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="element" upperBound="-1"
+        eType="#//ConceptualElement" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="cdm" upperBound="-1" eType="#//ConceptualDataModel"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LogicalDataModel" eSuperTypes="#//UddlElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="element" upperBound="-1"
+        eType="#//LogicalElement" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ldm" upperBound="-1" eType="#//LogicalDataModel"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PlatformDataModel" eSuperTypes="#//UddlElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="element" upperBound="-1"
+        eType="#//PlatformElement" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="pdm" upperBound="-1" eType="#//PlatformDataModel"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ConceptualElement" eSuperTypes="#//UddlElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ConceptualComposableElement" eSuperTypes="#//ConceptualElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ConceptualBasisEntity" eSuperTypes="#//ConceptualElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ConceptualDomain" eSuperTypes="#//ConceptualElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ConceptualObservable" eSuperTypes="#//ConceptualComposableElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ConceptualCharacteristic">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="rolename" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="lowerBound" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="upperBound" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="specializes" eType="#//ConceptualCharacteristic"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ConceptualEntity" eSuperTypes="#//ConceptualComposableElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="specializes" eType="#//ConceptualEntity"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="composition" upperBound="-1"
+        eType="#//ConceptualComposition" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="basisEntity" unique="false"
+        upperBound="-1" eType="#//ConceptualBasisEntity"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ConceptualComposition" eSuperTypes="#//ConceptualCharacteristic">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="#//ConceptualComposableElement"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ConceptualAssociation" eSuperTypes="#//ConceptualEntity">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ConceptualBasisEntity"
+        unique="false" upperBound="-1" eType="#//ConceptualBasisEntity"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="participant" upperBound="-1"
+        eType="#//ConceptualParticipant" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ConceptualParticipant" eSuperTypes="#//ConceptualCharacteristic">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="#//ConceptualEntity"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="sourceLowerBound" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="sourceUpperBound" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="path" eType="#//ConceptualPathNode"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ConceptualPathNode">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="node" eType="#//ConceptualPathNode"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ConceptualParticipantPathNode" eSuperTypes="#//ConceptualPathNode">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="projectedParticipant" eType="#//ConceptualParticipant"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ConceptualCharacteristicPathNode" eSuperTypes="#//ConceptualPathNode">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="projectedCharacteristic"
+        eType="#//ConceptualCharacteristic"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ConceptualView" eSuperTypes="#//ConceptualElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ConceptualQuery" eSuperTypes="#//ConceptualView">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="specification" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ConceptualCompositeQuery" eSuperTypes="#//ConceptualView">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isUnion" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="composition" upperBound="-1"
+        eType="#//ConceptualQueryComposition" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ConceptualQueryComposition">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="#//ConceptualView"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="rolename" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LogicalElement" eSuperTypes="#//UddlElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="LogicalUnit" eSuperTypes="#//LogicalElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="LogicalConversion" eSuperTypes="#//LogicalElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="source" eType="#//LogicalAssociation"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="destination" eType="#//LogicalAssociation"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LogicalAffineConversion" eSuperTypes="#//LogicalConversion">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="conversionFactor" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFloat"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="offset" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFloat"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LogicalValueType" eSuperTypes="#//LogicalElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="LogicalString" eSuperTypes="#//LogicalValueType"/>
+  <eClassifiers xsi:type="ecore:EClass" name="LogicalCharacter" eSuperTypes="#//LogicalValueType"/>
+  <eClassifiers xsi:type="ecore:EClass" name="LogicalBoolean" eSuperTypes="#//LogicalValueType"/>
+  <eClassifiers xsi:type="ecore:EClass" name="LogicalNumeric" eSuperTypes="#//LogicalValueType"/>
+  <eClassifiers xsi:type="ecore:EClass" name="LogicalInteger" eSuperTypes="#//LogicalNumeric"/>
+  <eClassifiers xsi:type="ecore:EClass" name="LogicalNatural" eSuperTypes="#//LogicalNumeric"/>
+  <eClassifiers xsi:type="ecore:EClass" name="LogicalReal" eSuperTypes="#//LogicalNumeric"/>
+  <eClassifiers xsi:type="ecore:EClass" name="LogicalNonNegativeReal" eSuperTypes="#//LogicalNumeric"/>
+  <eClassifiers xsi:type="ecore:EClass" name="LogicalEnumerated" eSuperTypes="#//LogicalEnumeratedBase">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="standardReference" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="label" upperBound="-1"
+        eType="#//LogicalEnumeratedBase" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Taxonomy"/>
+  <eClassifiers xsi:type="ecore:EClass" name="LogicalEnumeratedBase" eSuperTypes="#//LogicalValueType #//Taxonomy"/>
+  <eClassifiers xsi:type="ecore:EClass" name="LogicalEnumeratedSet" eSuperTypes="#//LogicalEnumeratedBase">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="label" upperBound="-1"
+        eType="#//LogicalEnumeratedBase" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LogicalEnumerationLabel" eSuperTypes="#//UddlElement #//LogicalEnumeratedBase"/>
+  <eClassifiers xsi:type="ecore:EClass" name="LogicalCoordinateSystem" eSuperTypes="#//LogicalElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="axisRelationshipDescription"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="angleEquation" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="distanceEquation" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="axis" unique="false" upperBound="-1"
+        eType="#//LogicalCoordinateSystemAxis"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LogicalCoordinateSystemAxis" eSuperTypes="#//LogicalElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="LogicalAbstractMeasurementSystem" eSuperTypes="#//LogicalElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="LogicalStandardMeasurementSystem" eSuperTypes="#//LogicalAbstractMeasurementSystem">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="referenceStandard" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LogicalLandmark" eSuperTypes="#//LogicalElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="LogicalMeasurementSystem" eSuperTypes="#//LogicalAbstractMeasurementSystem">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="measurementSystemAxis"
+        unique="false" upperBound="-1" eType="#//LogicalMeasurementSystemAxis"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="coordinateSystem" eType="#//LogicalCoordinateSystem"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="externalStandardReference"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="orientation" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="referencePoint" upperBound="-1"
+        eType="#//LogicalReferencePoint" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="constraint" upperBound="-1"
+        eType="#//LogicalMeasurementConstraint" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LogicalMeasurementSystemAxis" eSuperTypes="#//LogicalElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="axis" eType="#//LogicalCoordinateSystemAxis"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="defaultValueTypeUnit" unique="false"
+        upperBound="-1" eType="#//LogicalValueTypeUnit"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="constraint" upperBound="-1"
+        eType="#//LogicalMeasurementConstraint" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LogicalReferencePoint" eSuperTypes="#//UddlElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="landmark" eType="#//LogicalLandmark"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="referencePointPart" upperBound="-1"
+        eType="#//LogicalReferencePointPart" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LogicalReferencePointPart">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="axis" eType="#//LogicalMeasurementSystemAxis"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="valueTypeUnit" eType="#//LogicalValueTypeUnit"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LogicalValueTypeUnit" eSuperTypes="#//LogicalElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="valueType" eType="#//LogicalValueType"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="unit" eType="#//LogicalUnit"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="constraint" eType="#//LogicalConstraint"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LogicalConstraint" eSuperTypes="#//UddlElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="LogicalIntegerRangeConstraint" eSuperTypes="#//LogicalConstraint">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="lowerBound" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="upperBound" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LogicalRealRangeConstraint" eSuperTypes="#//LogicalConstraint">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="lowerBoundInclusive" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="lowerBound" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFloat"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="upperBound" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFloat"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="upperBoundInclusive" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LogicalStringConstraint" eSuperTypes="#//LogicalConstraint"/>
+  <eClassifiers xsi:type="ecore:EClass" name="LogicalRegularExpressionConstraint"
+      eSuperTypes="#//LogicalStringConstraint">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="expression" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LogicalFixedLengthStringConstraint"
+      eSuperTypes="#//LogicalStringConstraint">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="length" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LogicalEnumerationConstraint" eSuperTypes="#//LogicalConstraint">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="allowedValue" unique="false"
+        upperBound="-1" eType="#//LogicalEnumerationLabel"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LogicalMeasurementConstraint">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="constraintText" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LogicalMeasurementSystemConversion"
+      eSuperTypes="#//LogicalElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="source" eType="#//LogicalMeasurementSystem"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="equation" unique="false"
+        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="destination" eType="#//LogicalMeasurementSystem"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="conversionLossDescription"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LogicalMeasurement" eSuperTypes="#//LogicalComposableElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="realizes" eType="#//ConceptualObservable"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="attribute" upperBound="-1"
+        eType="#//LogicalMeasurementAttribute" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="measurementAxis" unique="false"
+        upperBound="-1" eType="#//LogicalMeasurementAxis"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="measurementSystem" eType="#//LogicalAbstractMeasurementSystem"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="constraint" upperBound="-1"
+        eType="#//LogicalMeasurementConstraint" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LogicalMeasurementAxis" eSuperTypes="#//LogicalElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="realizes" eType="#//ConceptualObservable"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="valueTypeUnit" unique="false"
+        upperBound="-1" eType="#//LogicalValueTypeUnit"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="measurementSystemAxis"
+        eType="#//LogicalMeasurementSystemAxis"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="constraint" upperBound="-1"
+        eType="#//LogicalMeasurementConstraint" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LogicalMeasurementAttribute">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="#//LogicalMeasurement"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="rolename" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LogicalMeasurementConversion" eSuperTypes="#//LogicalElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="source" eType="#//LogicalMeasurementSystem"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="equation" unique="false"
+        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="destination" eType="#//LogicalMeasurementSystem"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="conversionLossDescription"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LogicalComposableElement" eSuperTypes="#//LogicalElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="LogicalCharacteristic">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="rolename" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="lowerBound" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="upperBound" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="specializes" eType="#//LogicalCharacteristic"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LogicalEntity" eSuperTypes="#//LogicalComposableElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="specializes" eType="#//LogicalEntity"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="realizes" eType="#//ConceptualEntity"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="composition" upperBound="-1"
+        eType="#//LogicalComposition" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LogicalComposition" eSuperTypes="#//LogicalCharacteristic">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="#//LogicalComposableElement"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="realizes" eType="#//ConceptualComposition"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LogicalAssociation" eSuperTypes="#//LogicalEntity">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="participant" upperBound="-1"
+        eType="#//LogicalParticipant" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LogicalParticipant" eSuperTypes="#//LogicalCharacteristic">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="#//LogicalEntity"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="realizes" eType="#//ConceptualParticipant"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="sourceLowerBound" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="sourceUpperBound" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="path" eType="#//LogicalPathNode"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LogicalPathNode">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="node" eType="#//LogicalPathNode"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LogicalParticipantPathNode" eSuperTypes="#//LogicalPathNode">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="projectedParticipant" eType="#//LogicalParticipant"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LogicalCharacteristicPathNode" eSuperTypes="#//LogicalPathNode">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="projectedCharacteristic"
+        eType="#//LogicalCharacteristic"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LogicalView" eSuperTypes="#//LogicalElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="LogicalQuery" eSuperTypes="#//LogicalView">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="realizes" eType="#//ConceptualQuery"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="specification" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LogicalCompositeQuery" eSuperTypes="#//LogicalView">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="realizes" eType="#//ConceptualCompositeQuery"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isUnion" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="composition" upperBound="-1"
+        eType="#//LogicalQueryComposition" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LogicalQueryComposition">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="#//LogicalView"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="rolename" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="realizes" eType="#//ConceptualQueryComposition"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PlatformElement" eSuperTypes="#//UddlElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="PlatformComposableElement" eSuperTypes="#//PlatformElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="PlatformDataType" eSuperTypes="#//PlatformComposableElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="realizes" eType="#//LogicalElement"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PlatformPrimitive" eSuperTypes="#//PlatformDataType"/>
+  <eClassifiers xsi:type="ecore:EClass" name="PlatformBoolean" eSuperTypes="#//PlatformPrimitive"/>
+  <eClassifiers xsi:type="ecore:EClass" name="PlatformOctet" eSuperTypes="#//PlatformPrimitive"/>
+  <eClassifiers xsi:type="ecore:EClass" name="PlatformChar" eSuperTypes="#//PlatformPrimitive"/>
+  <eClassifiers xsi:type="ecore:EClass" name="PlatformStringType" eSuperTypes="#//PlatformPrimitive"/>
+  <eClassifiers xsi:type="ecore:EClass" name="PlatformString" eSuperTypes="#//PlatformStringType"/>
+  <eClassifiers xsi:type="ecore:EClass" name="PlatformBoundedString" eSuperTypes="#//PlatformStringType">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="maxLength" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PlatformCharArray" eSuperTypes="#//PlatformStringType">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="length" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PlatformEnumeration" eSuperTypes="#//PlatformPrimitive"/>
+  <eClassifiers xsi:type="ecore:EClass" name="PlatformNumber" eSuperTypes="#//PlatformPrimitive"/>
+  <eClassifiers xsi:type="ecore:EClass" name="PlatformInteger" eSuperTypes="#//PlatformNumber"/>
+  <eClassifiers xsi:type="ecore:EClass" name="PlatformShort" eSuperTypes="#//PlatformInteger"/>
+  <eClassifiers xsi:type="ecore:EClass" name="PlatformLong" eSuperTypes="#//PlatformInteger"/>
+  <eClassifiers xsi:type="ecore:EClass" name="PlatformLongLong" eSuperTypes="#//PlatformInteger"/>
+  <eClassifiers xsi:type="ecore:EClass" name="PlatformReal" eSuperTypes="#//PlatformNumber"/>
+  <eClassifiers xsi:type="ecore:EClass" name="PlatformDouble" eSuperTypes="#//PlatformReal"/>
+  <eClassifiers xsi:type="ecore:EClass" name="PlatformLongDouble" eSuperTypes="#//PlatformReal"/>
+  <eClassifiers xsi:type="ecore:EClass" name="PlatformFloat" eSuperTypes="#//PlatformReal"/>
+  <eClassifiers xsi:type="ecore:EClass" name="PlatformFixed" eSuperTypes="#//PlatformReal">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="digits" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="scale" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PlatformUnsignedInteger" eSuperTypes="#//PlatformInteger"/>
+  <eClassifiers xsi:type="ecore:EClass" name="PlatformUShort" eSuperTypes="#//PlatformUnsignedInteger"/>
+  <eClassifiers xsi:type="ecore:EClass" name="PlatformULong" eSuperTypes="#//PlatformUnsignedInteger"/>
+  <eClassifiers xsi:type="ecore:EClass" name="PlatformULongLong" eSuperTypes="#//PlatformUnsignedInteger"/>
+  <eClassifiers xsi:type="ecore:EClass" name="PlatformSequence" eSuperTypes="#//PlatformPrimitive">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="maxSize" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PlatformArray" eSuperTypes="#//PlatformPrimitive">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="size" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PlatformStruct" eSuperTypes="#//PlatformDataType">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="member" upperBound="-1"
+        eType="#//PlatformStructMember" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PlatformStructMember">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="#//PlatformDataType"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="rolename" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="precision" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFloat"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="realizes" eType="#//LogicalMeasurementAttribute"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PlatformCharacteristic">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="rolename" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="lowerBound" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="upperBound" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="specializes" eType="#//PlatformCharacteristic"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PlatformEntity" eSuperTypes="#//PlatformComposableElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="specializes" eType="#//PlatformEntity"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="realizes" eType="#//LogicalEntity"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="composition" upperBound="-1"
+        eType="#//PlatformComposition" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PlatformComposition" eSuperTypes="#//PlatformCharacteristic">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="#//PlatformComposableElement"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="realizes" eType="#//LogicalComposition"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="precision" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFloat"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PlatformAssociation" eSuperTypes="#//PlatformEntity">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="participant" upperBound="-1"
+        eType="#//PlatformParticipant" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PlatformParticipant" eSuperTypes="#//PlatformCharacteristic">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="#//PlatformEntity"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="realizes" eType="#//LogicalParticipant"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="sourceLowerBound" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="sourceUpperBound" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="path" eType="#//PlatformPathNode"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PlatformPathNode">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="node" eType="#//PlatformPathNode"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PlatformParticipantPathNode" eSuperTypes="#//PlatformPathNode">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="projectedParticipant" eType="#//PlatformParticipant"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PlatformCharacteristicPathNode" eSuperTypes="#//PlatformPathNode">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="projectedCharacteristic"
+        eType="#//PlatformCharacteristic"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PlatformView" eSuperTypes="#//PlatformElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="realizes" eType="#//LogicalQuery"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PlatformQuery" eSuperTypes="#//PlatformView">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="specification" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PlatformCompositeQuery" eSuperTypes="#//PlatformView">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isUnion" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="composition" upperBound="-1"
+        eType="#//PlatformQueryComposition" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PlatformQueryComposition">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="#//PlatformView"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="rolename" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="realizes" eType="#//LogicalQueryComposition"/>
+  </eClassifiers>
+</ecore:EPackage>

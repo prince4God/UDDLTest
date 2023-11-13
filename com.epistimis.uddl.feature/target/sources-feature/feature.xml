@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature id="com.epistimis.uddl.feature.source" version="1.0.0.202311071617" label="Uddl Feature  Developer Resources" provider-name="Epistimis LLC">
+  <includes id="com.epistimis.uddl.feature" version="1.0.0.202311071617"/>
+  <includes id="com.epistimis.uddl.query.feature.source" version="1.0.0.202311070530"/>
+  <plugin id="com.epistimis.uddl.source" version="1.0.0.202311071617" download-size="0" install-size="0" unpack="false"/>
+  <plugin id="com.epistimis.uddl.ide.source" version="1.0.0.202311071617" download-size="0" install-size="0" unpack="false"/>
+  <plugin id="com.epistimis.uddl.ui.source" version="1.0.0.202311071617" download-size="0" install-size="0" unpack="false"/>
+</feature>

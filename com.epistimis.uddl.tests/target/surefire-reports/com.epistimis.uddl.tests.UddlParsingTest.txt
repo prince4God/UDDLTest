@@ -1,0 +1,7 @@
+-------------------------------------------------------------------------------
+Test set: com.epistimis.uddl.tests.UddlParsingTest
+-------------------------------------------------------------------------------
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 11.36 s - in null
+com.epistimis.uddl.tests.UddlParsingTest.testExportedEObjectDescriptions  Time elapsed: 0.468 s
+com.epistimis.uddl.tests.UddlParsingTest.testClassesInIndex  Time elapsed: 0.048 s
+com.epistimis.uddl.tests.UddlParsingTest.loadModel  Time elapsed: 0.007 s

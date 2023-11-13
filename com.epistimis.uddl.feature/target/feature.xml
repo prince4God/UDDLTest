@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="com.epistimis.uddl.feature"
+	  label="Uddl Feature "
+      version="1.0.0.202311071617"
+      provider-name="Epistimis LLC">
+
+   <includes
+         id="com.epistimis.uddl.query.feature"
+         version="1.0.0.202311070530"
+         name="UDDL Query Language"
+         search-location="both"/>
+
+	<plugin
+			id="com.epistimis.uddl"
+			download-size="949"
+			install-size="2762"
+			version="1.0.0.202311071617"
+			unpack="false"/>
+
+	<plugin
+			id="com.epistimis.uddl.ide"
+			download-size="279"
+			install-size="1630"
+			version="1.0.0.202311071617"
+			unpack="false"/>
+
+	<plugin
+			id="com.epistimis.uddl.ui"
+			download-size="59"
+			install-size="213"
+			version="1.0.0.202311071617"
+			unpack="false"/>
+
+</feature>
