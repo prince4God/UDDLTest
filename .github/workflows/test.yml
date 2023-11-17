@@ -1,10 +1,16 @@
 name: UDDLTest Maven
 
-on:
+on:  
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+      - name: check Maven Project
+        uses: actions/checkout@v3
+        with:
+          repository: https://github.com/prince4God/uddlquery.git # The name used to reference this repository in the checkout step
+          type: github
+          endpoint: MyGitHubServiceConnection
 
 jobs:
   build:
@@ -12,19 +18,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Build Chain
-    - uses: ginxo/github-action-build-chain@BXMSPROD-1025
-      with:
-        definition-file: 'https://github.com/prince4God/uddlquery/blob/main/.github/workflows/uddlquery.yml'
-      env:
-        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-    - uses: actions/checkout@v3
-    - name: Set up JDK 21
-      uses: actions/setup-java@v3
-      with:
-        java-version: '21'
-        distribution: 'temurin'
-        cache: maven
+      - name: Build Chain
+        uses: actions/checkout@v3
+      - name: Set up JDK 21
+        uses: actions/setup-java@v3
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
   
-    - name: Build with Maven
-      run: mvn -B package --file pom.xml
+      - name: Build with Maven
+        run: mvn -B package --file pom.xml
