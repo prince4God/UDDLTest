@@ -37,7 +37,7 @@
 		<dependencies>
 			<dependency>
 				<groupId>org.eclipse.xtext</groupId>
-				<artifactId>repository-a-artifact</artifactId>
+				<artifactId>uddlquery-artifact</artifactId>
 				<version>${xtextVersion}</version>
 				<type>pom</type>
 				<scope>import</scope>
