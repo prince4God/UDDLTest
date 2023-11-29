@@ -38,6 +38,7 @@
 			<dependency>
 				<groupId>org.eclipse.xtext</groupId>
 				<artifactId>xtext-dev-bom</artifactId>
+				<artifactId>repository-a-artifact</artifactId>
 				<version>${xtextVersion}</version>
 				<type>pom</type>
 				<scope>import</scope>
@@ -235,6 +236,10 @@
 		</pluginManagement>
 	</build>
 	<repositories>
+		<repository>
+       		    <id>internal.repo</id>
+        	    <url>file://${project.build.directory}/mvn-repo</url>
+    		</repository>
 		<repository>
 			<id>codehaus-snapshots</id>
 			<name>disable dead 'Codehaus Snapshots' repository, see https://bugs.eclipse.org/bugs/show_bug.cgi?id=481478</name>
