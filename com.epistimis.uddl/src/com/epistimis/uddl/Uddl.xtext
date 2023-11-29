@@ -19,16 +19,18 @@ DataModel:
 	'}'
 	;
 
-// A few generic rules
-terminal fragment DEC:  ('0'..'9')+;
 
 // TODO: This needs code to process the +|- when creating int or float?
 /** INT override causing ambiguity with XBase */
-@Override
-terminal INT returns ecore::EInt:  ('+'|'-')? DEC;
-//LONG returns ecore::ELong: INT ("L"|"l");
+//@Override
+terminal SIGNED_INT returns ecore::EInt:  ('+'|'-') INT;
+// Handling LONGs also requires recognizing numerical representations that are too large to fit in an integer
+//LONG returns ecore::ELong:  SIGNED_INT ("L"|"l");
 terminal FLOAT returns ecore::EFloat : ('+'|'-')? DEC '.' DEC;
-//DOUBLE returns ecore::EDouble : INT '.' INT ('D'|'d');
+//DOUBLE returns ecore::EDouble : ('+'|'-')? DEC '.' DEC ('D'|'d');
+
+// A few generic rules
+terminal fragment DEC:  ('0'..'9')+;
 
 QN:
     ID ('.' ID)*;
@@ -46,6 +48,10 @@ QualifiedNameWithWildcard:
     QN '.*'?;
 
  // Metamodel concepts starts here
+ 
+ElementAttrs:
+	name=ID (description=STRING)?
+;
  
 /** An Element is the root type for defining all named elements in the DataModel. The “name” attribute captures the name of the Element in the model. The “description” attribute captures a description for the Element. */
 UddlElement:  // This is datamodel.Element but it's too much hassle to fix after the fact.
@@ -129,23 +135,23 @@ ConceptualEntity:
 
 /** A conceptual Composition is the mechanism that allows conceptual Entities to be constructed from other conceptual ComposableElements. The “type” of a Composition is the ComposableElement being used to construct the conceptual Entity. */
 ConceptualComposition:
-	type=[ConceptualComposableElement|QN]  rolename=ID ('[' (lowerBound=INT)? ':' (upperBound=INT)? ']')? (description=STRING)? (':' specializes=[ConceptualCharacteristic|QN])? ';'
+	type=[ConceptualComposableElement|QN]  rolename=ID ('[' (lowerBound=INT)? ':' (upperBound=(INT|SIGNED_INT))? ']')? (description=STRING)? (':' specializes=[ConceptualCharacteristic|QN])? ';'
 ;
 
 /** A conceptual Association represents a relationship between two or more conceptual Entities. The conceptual Entities participating in the conceptual Association may be specified locally or in its generalized types. In addition, there may be one or more conceptual ComposableElements that characterize the relationship. Conceptual Associations are conceptual Entities that may also participate in other conceptual Associations. */
 ConceptualAssociation:
 		'cassoc' name=ID (description=STRING)? (':' specializes=[ConceptualEntity|QN])? '{'
 		composition+=ConceptualComposition*
-		('basis:' '[' ConceptualBasisEntity+=[ConceptualBasisEntity|QN]+ ']')?
+		('basis:' '[' basisEntity+=[ConceptualBasisEntity|QN]+ ']')?
 		('participants:' '[' participant+=ConceptualParticipant+ ']')?
 	'};'
 ;
 
 /** A conceptual Participant is the mechanism that allows a conceptual Association to be constructed between two or more conceptual Entities. The “type” of a conceptual Participant is the conceptual Entity being used to construct the conceptual Association. The “sourceLowerBound” and “sourceUpperBound” attributes define the multiplicity of the conceptual Association relative to the Participant. A “sourceUpperBound” multiplicity of –1 represents an unbounded sequence. The “path” attribute of the Participant describes the chain of entity characteristics to traverse to reach the subject of the association beginning with the entity referenced by the “type” attribute.  */
 ConceptualParticipant:
-	type=[ConceptualEntity|QN]  rolename=ID ('[' (lowerBound=INT)? ':' (upperBound=INT)? ']')? (description=STRING)? (':' specializes=[ConceptualCharacteristic|QN])?
+	type=[ConceptualEntity|QN]  rolename=ID ('[' (lowerBound=INT)? ':' (upperBound=(INT|SIGNED_INT))? ']')? (description=STRING)? (':' specializes=[ConceptualCharacteristic|QN])?
 		'{'
-			'src:' '['sourceLowerBound=INT ':' sourceUpperBound=INT ']'
+			'src:' '['sourceLowerBound=INT ':' sourceUpperBound=(INT|SIGNED_INT) ']'
 			('path:' path=ConceptualPathNode)?
 		'}'
 		';'
@@ -285,9 +291,7 @@ LogicalNonNegativeReal:			'real+' name=ID (description=STRING)? ';'	;
 
 /** An Enumerated is a value type representing a set of named values, each with specific meaning. */
 LogicalEnumerated:
-
-	'enum' 	name=ID (description=STRING)? 
-		('stdRef:' standardReference=STRING)?
+	'enum' 	name=ID (description=STRING)? ('stdRef:' standardReference=STRING)?
 		'['
 		label+=(LogicalEnumerationLabel | LogicalEnumeratedSet) ','? (label+=(LogicalEnumerationLabel| LogicalEnumeratedSet) ','?)*
 		']'
@@ -386,6 +390,7 @@ LogicalReferencePointPart:
 /** A ValueTypeUnit defines the logical representation of a MeasurementSystemAxis or MeasurementAxis value type in terms of a Unit and ValueType pair. */
 LogicalValueTypeUnit:
 	'vtu' valueType=[LogicalValueType|QN] unit=[LogicalUnit|QN] name=ID (description=STRING)?
+	// NOTE: This has a single, optional attribute - so the curlies are optional as well
 	('{' '!' constraint=LogicalConstraint '}')?
 	 ';'
 ;
@@ -404,7 +409,7 @@ LogicalConstraint:
 //;
 /** An IntegerRangeConstraint specifies a defined range of meaningful values for an Integer or Natural. The “upperBound” is greater than or equal to the “lowerBound”. The defined range is inclusive of the “upperBound” and “lowerBound”. */
 LogicalIntegerRangeConstraint:
-	'irc'  name=ID '[' lowerBound=INT ':' upperBound=INT ']' (description=STRING)?  ';'
+	'irc'  name=ID '[' lowerBound=(INT|SIGNED_INT) ':' upperBound=(INT|SIGNED_INT) ']' (description=STRING)?  ';'
 ;
 /** A RealConstraint specifies a defined set of meaningful values for a Real or NonNegativeReal. */
 //LogicalRealConstraint:
@@ -438,7 +443,7 @@ LogicalFixedLengthStringConstraint:
 // for now we assume it has to have at least 1 value
 /** An EnumerationConstraint identifies a subset of enumerated values (EnumerationLabel) considered valid for an Enumerated value type of a MeasurementAxis. */
 LogicalEnumerationConstraint :
-	{LogicalEnumerationConstraint} 'ec' name=ID (description=STRING)? ('[' (allowedValue+=[LogicalEnumerationLabel|QN])+ ']')?
+	{LogicalEnumerationConstraint} 'ec' name=ID (description=STRING)? ('[' (allowedValue+=[LogicalEnumeratedBase|QN])+ ']')?
 ;
 
 /** A MeasurementConstraint describes the constraints over the axes of a given MeasurementSystem or Measurement or over the value types of a MeasurementSystemAxis or MeasurementAxis. The constraints are described in the “constraintText” attribute. The specific format of “constraintText” is undefined. */
@@ -472,7 +477,7 @@ LogicalMeasurement:
 		('axis:' '[' measurementAxis+=[LogicalMeasurementAxis|QN]+ ']')?
 		'sys:' measurementSystem=[LogicalAbstractMeasurementSystem|QN]
 		('![' constraint+=LogicalMeasurementConstraint ']')?
-		'};'
+	'};'
 ;
 
 /** A MeasurementAxis optionally establishes constraints for a MeasurementSystemAxis and may optionally override its default units and value types. */
@@ -520,7 +525,7 @@ LogicalEntity:
 
 /** A logical Composition is the mechanism that allows logical Entities to be constructed from other logical ComposableElements. The “type” of a Composition is the ComposableElement being used to construct the logical Entity. The “lowerBound” and “upperBound” define the multiplicity of the composed logical Entity. An “upperBound” multiplicity of –1 represents an unbounded sequence. */
 LogicalComposition:
-	type=[LogicalComposableElement|QN]  rolename=ID ('[' lowerBound=INT ':' upperBound=INT ']')? (description=STRING)? (':' specializes=[LogicalCharacteristic|QN])?  '->' realizes=[ConceptualComposition|QN] ';'
+	type=[LogicalComposableElement|QN]  rolename=ID ('[' lowerBound=INT ':' upperBound=(INT|SIGNED_INT) ']')? (description=STRING)? (':' specializes=[LogicalCharacteristic|QN])?  '->' realizes=[ConceptualComposition|QN] ';'
 
 ;
 
@@ -536,8 +541,8 @@ LogicalAssociation:
 
 /** A logical Participant is the mechanism that allows a logical Association to be constructed between two or more logical Entities. The “type” of a logical Participant is the logical Entity being used to construct the logical Association. The “sourceLowerBound” and “sourceUpperBound” attributes define the multiplicity of the logical Association relative to the Participant. A “sourceUpperBound” multiplicity of –1 represents an unbounded sequence. The “path” attribute of the Participant describes the chain of entity characteristics to traverse to reach the subject of the association beginning with the entity referenced by the “type” attribute. */
 LogicalParticipant:
-	type=[LogicalEntity|QN]  rolename=ID ('[' lowerBound=INT ':' upperBound=INT ']')? (description=STRING)? (':' specializes=[LogicalCharacteristic|QN])?  '->' realizes=[ConceptualParticipant|QN] '{'
-		'source:' '[' sourceLowerBound=INT ':' sourceUpperBound=INT ']'
+	type=[LogicalEntity|QN]  rolename=ID ('[' lowerBound=INT ':' upperBound=(INT|SIGNED_INT) ']')? (description=STRING)? (':' specializes=[LogicalCharacteristic|QN])?  '->' realizes=[ConceptualParticipant|QN] '{'
+		'source:' '[' sourceLowerBound=INT ':' sourceUpperBound=(INT|SIGNED_INT) ']'
 		('path:' path=LogicalPathNode )?
 	'};'
 ;
@@ -582,7 +587,7 @@ LogicalCompositeQuery:
 
 /** A logical QueryComposition is the mechanism that allows a logical CompositeQuery to be constructed from logical Queries and other logical CompositeQueries. The “rolename” attribute defines the name of the composed logical View within the scope of the composing logical CompositeQuery. The “type” of a logical QueryComposition is the logical View being used to construct the logical CompositeQuery. */
 LogicalQueryComposition:
-	type=[LogicalView|QN] rolename=ID ( '->' realizes=[ConceptualQueryComposition|QN])?
+	type=[LogicalView|QN] rolename=ID ( '->' realizes=[ConceptualQueryComposition|QN])? ';'
 ;
 
 /* * * * * * * Platform Level Rules * * * * * *  */
@@ -725,12 +730,12 @@ PlatformStruct:
 		member+=PlatformStructMember
 		member+=PlatformStructMember
 		(member+=PlatformStructMember)?
-	'}'
+	'};'
 ;
 
 /** A StructMember is the mechanism that allows Structs to be constructed from other PlatformDataTypes. The “type” of a StructMember is the PlatformDataType being used to construct the Struct. If “type” is a Primitive, the “precision” attribute specifies a measure of the detail in which a quantity is captured. */
 PlatformStructMember:
-	type=[PlatformDataType|QN] rolename=ID '(' precision=FLOAT ')' ('->' realizes=[LogicalMeasurementAttribute|QN] ';')?
+	type=[PlatformDataType|QN] rolename=ID '(' precision=FLOAT ')' ('->' realizes=[LogicalMeasurementAttribute|QN] )? ';'
 ;
 
 /** A platform Characteristic contributes to the uniqueness of a platform Entity. The “rolename” attribute defines the name of the platform Characteristic within the scope of the platform Entity. The “lowerBound” and “upperBound” attributes define the multiplicity of the composed Characteristic. An “upperBound” multiplicity of –1 represents an unbounded sequence. */
@@ -749,7 +754,8 @@ PlatformEntity:
 
 /** A platform Composition is the mechanism that allows platform Entities to be constructed from other platform ComposableElements. The “type” of a Composition is the ComposableElement being used to construct the platform Entity. The “lowerBound” and “upperBound” define the multiplicity of the composed platform Entity. An “upperBound” multiplicity of –1 represents an unbounded sequence. If “type” is a Primitive, the “precision” attribute specifies a measure of the detail in which a quantity is captured.  */
 PlatformComposition:
-	type=[PlatformComposableElement|QN]  rolename=ID ('[' lowerBound=INT ':' upperBound=INT ']')? (description=STRING)? (':' specializes=[PlatformCharacteristic|QN])?  '->' realizes=[LogicalComposition|QN]
+	type=[PlatformComposableElement|QN]  rolename=ID ('[' lowerBound=INT ':' upperBound=(INT|SIGNED_INT) ']')? (description=STRING)? (':' specializes=[PlatformCharacteristic|QN])?  '->' realizes=[LogicalComposition|QN]
+		// NOTE: This has a single, optional attribute - so the curlies are optional also
 		('{'
 			'prec:' precision=FLOAT
 		'}')? ';'
@@ -767,8 +773,8 @@ PlatformAssociation:
 
 /** A platform Participant is the mechanism that allows a platform Association to be constructed between two or more platform Entities. The “type” of a platform Participant is the platform Entity being used to construct the platform Association. The “sourceLowerBound” and “sourceUpperBound” attributes define the multiplicity of the platform Association relative to the Participant. A “sourceUpperBound” multiplicity of –1 represents an unbounded sequence. The “path” attribute of the Participant describes the chain of entity characteristics to traverse to reach the subject of the association beginning with the entity referenced by the “type” attribute.  */
 PlatformParticipant:
-	type=[PlatformEntity|QN]  rolename=ID ('[' lowerBound=INT ':' upperBound=INT ']')? (description=STRING)? (':' specializes=[PlatformCharacteristic|QN])?  '->' realizes=[LogicalParticipant|QN] '{'
-		'source:' '[' sourceLowerBound=INT ':' sourceUpperBound=INT ']'
+	type=[PlatformEntity|QN]  rolename=ID ('[' lowerBound=INT ':' upperBound=(INT|SIGNED_INT) ']')? (description=STRING)? (':' specializes=[PlatformCharacteristic|QN])?  '->' realizes=[LogicalParticipant|QN] '{'
+		'source:' '[' sourceLowerBound=INT ':' sourceUpperBound=(INT|SIGNED_INT) ']'
 		('path:' path=PlatformPathNode )?
 	'};'
 ;
@@ -813,7 +819,7 @@ PlatformCompositeQuery:
 
 /** A platform QueryComposition is the mechanism that allows a platform CompositeQuery to be constructed from platform Queries and other platform CompositeQueries. The “rolename” attribute defines the name of the composed platform View within the scope of the composing platform CompositeQuery. The “type” of a platform QueryComposition is the platform View being used to construct the platform CompositeQuery. */
 PlatformQueryComposition:
-	type=[PlatformView|QN] rolename=ID ( '->' realizes=[LogicalQueryComposition|QN])?
+	type=[PlatformView|QN] rolename=ID ( '->' realizes=[LogicalQueryComposition|QN])? ';'
 ;
 
 
